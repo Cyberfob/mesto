@@ -1,0 +1,7 @@
+.profile__info {
+    display: flex;
+    flex-direction: row;
+    align-content: center;
+    margin-bottom: 16px;
+    justify-content: center;
+}

@@ -1,0 +1,6 @@
+.profile__data {
+    margin: 0px 0px 0px 30px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
