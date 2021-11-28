@@ -24,8 +24,14 @@
 @import url(../blocks/profile/__container/profile__container.css);
 
 /* Cards */
-@import url();
-@import url();
+@import url(../blocks/cards/cards.css);
+
+/* Card */
+@import url(../blocks/card/card.css);
+@import url(../blocks/card/__footer/card__footer.css);
+@import url(../blocks/card/__title/card__title.css);
+@import url(../blocks/card/__like/card__like.css);
+@import url(../blocks/card/__img/card__img.css);
 @import url();
 @import url();
 

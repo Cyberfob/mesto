@@ -8,3 +8,7 @@
     align-self: center;
     justify-self: center;
 }
+
+.profile__add-btn:hover {
+    opacity: 0.6;
+}
