@@ -49,7 +49,7 @@ closeBtn.addEventListener("click", closePopup );
 
 //********************* Функция из описания спринта.*******************************
 // Находим форму в DOM
-let formElement = document.querySelector(".modal__submit"); // Воспользуйтесь методом querySelector()
+let formElement = document.querySelector(".form"); // Воспользуйтесь методом querySelector()
 // Находим поля формы в DOM
  // Воспользуйтесь инструментом .querySelector() inputName.value
  // Воспользуйтесь инструментом .querySelector() inputAbout.value
