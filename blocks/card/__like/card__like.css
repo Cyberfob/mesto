@@ -5,6 +5,10 @@
     padding: 0;
     background: none;
     border: none;
+    background-image: url(../../../images/like_disable.svg);
+    background-position: center;
+    margin-right: 30px;
+    box-sizing: border-box;
 }
 
 .card__like:hover {

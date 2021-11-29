@@ -1,0 +1,17 @@
+.modal__submit {
+    border:none;
+    color: #fff;
+    background: #000000;
+    border-radius: 2px;
+    padding-bottom: 14px;
+    padding-top: 14px;
+    margin: 48px 36px 37px 0px;
+    font-weight: normal;
+    font-size: 18px;
+    line-height: 22px;
+    text-align: center;
+}
+
+.modal__submit:hover {
+    opacity: 0.8;
+}

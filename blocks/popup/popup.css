@@ -1,0 +1,15 @@
+.popup {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    display: none;
+    flex-direction: column;
+    max-width: 470px;
+    margin: 195px auto 0px auto;
+}
+
+@media screen and (max-width: 430px) {
+    
+}

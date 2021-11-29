@@ -35,64 +35,52 @@
                 <img class="card__img" src="./images/karachaevsk.jpg" alt="Карачаевск">
                 <div class="card__footer">
                     <h3 class="card__title">Карачаевск</h3>
-                    <button class="card__like">
-                        <img src="./images/like_disable.svg" alt="">
-                    </button>
+                    <button id="1" class="card__like"></button>
                 </div>
             </div>
             <div class="card">
                 <img class="card__img" src="./images/elbrus.jpg" alt="Гора Эльбрус">
                 <div class="card__footer">
                     <h3 class="card__title">Гора Эльбрус</h3>
-                    <button class="card__like">
-                        <img src="./images/like_disable.svg" alt="">
-                    </button>
+                    <button id="2" class="card__like"></button>
                 </div>
             </div>
             <div class="card">
                 <img class="card__img" src="./images/dambai.jpg" alt="Домбай">
                 <div class="card__footer">
                     <h3 class="card__title">Домбай</h3>
-                    <button class="card__like">
-                        <img src="./images/like_disable.svg" alt="">
-                    </button>
+                    <button id="3" class="card__like"></button>
                 </div>
             </div>
             <div class="card">
                 <img class="card__img" src="./images/elbrus.jpg" alt="Гора Эльбрус">
                 <div class="card__footer">
                     <h3 class="card__title">Гора Эльбрус</h3>
-                    <button class="card__like">
-                        <img src="./images/like_disable.svg" alt="">
-                    </button>
+                    <button id="4" class="card__like"></button>
                 </div>
             </div>
             <div class="card">
                 <img class="card__img" src="./images/dambai.jpg" alt="Домбай">
                 <div class="card__footer">
                     <h3 class="card__title">Домбай</h3>
-                    <button class="card__like">
-                        <img src="./images/like_disable.svg" alt="">
-                    </button>
+                    <button id="5" class="card__like"></button>
                 </div>
             </div>
             <div class="card">
                 <img class="card__img" src="./images/karachaevsk.jpg" alt="Карачаево-Черкесия">
                 <div class="card__footer">
                     <h3 class="card__title">Карачаево-Черкесия</h3>
-                    <button class="card__like">
-                        <img src="./images/like_disable.svg" alt="">
-                    </button>
+                    <button id="6" class="card__like"></button>
                 </div>
             </div>
         </section>
         <section class="popup">
             <div class="popup__overlay"></div>
-            <input type="button" value="+">
+            <input class="popup__close-btn" type="button" value="">
             <div class="modal">
-                <h2 class="modal__title"></h2>
-                <input class="modal__name" type="text" name="name" id="">
-                <input class="modal__about" type="text" name="about" id="">
+                <h2 class="modal__title">Редактировать профиль</h2>
+                <input class="modal__input modal__input_name" maxlength="18" placeholder="Введите ваше имя" type="text" value="" name="name">
+                <input class="modal__input modal__input_about" maxlength="40" placeholder="Введите информацию о себе" type="text" value="" name="about">
                 <input class="modal__submit" type="submit" value="Сохранить">
             </div>
         </section>
