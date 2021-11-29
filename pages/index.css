@@ -40,6 +40,8 @@
 @import url(../blocks/popup/__close-btn/popup__close-btn.css);
 @import url(../blocks/popup/_active/popup_active.css);
 
+/* Form */
+@import url(../blocks/form/form.css);
 
 /* Modal */
 @import url(../blocks/modal/modal.css);
