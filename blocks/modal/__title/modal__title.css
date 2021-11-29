@@ -4,3 +4,11 @@
     line-height: 29px;
     margin: 34px 64px 54px 0px;
 }
+
+@media screen and (max-width: 768px) {
+    .modal__title {
+        font-size: 18px;
+        line-height: 22px;
+        margin: 25px 22px 75px 0px;
+    }
+}

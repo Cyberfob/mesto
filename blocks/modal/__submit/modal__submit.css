@@ -15,3 +15,11 @@
 .modal__submit:hover {
     opacity: 0.8;
 }
+
+@media screen and (max-width: 768px) {
+    .modal__submit {
+        margin: 45px 22px 25px 0px;
+        font-size: 14px;
+        line-height: 17px;
+    }
+}

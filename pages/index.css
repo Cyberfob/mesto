@@ -33,7 +33,6 @@
 @import url(../blocks/card/__like/card__like.css);
 @import url(../blocks/card/__img/card__img.css);
 @import url(../blocks/card/__like/_active/card__like_active.css);
-@import url();
 
 /* Popup */
 @import url(../blocks/popup/popup.css);
@@ -49,9 +48,6 @@
 @import url(../blocks/modal/__input/_name/modal__input_name.css);
 @import url(../blocks/modal/__input/_about/modal__input_about.css);
 @import url(../blocks/modal/__submit/modal__submit.css);
-@import url();
-@import url();
-@import url();
 
 /* Footer */
 @import url(../blocks/footer/footer.css);
