@@ -7,3 +7,12 @@
     line-height: 17px;
     padding-bottom: 5px;
 }
+
+.modal__input:first-child {
+    margin-bottom: 30px;
+    margin-right: 36px;
+}
+
+.modal__input:last-child {
+    margin-right: 36px;
+}
