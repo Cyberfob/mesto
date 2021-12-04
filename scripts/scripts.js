@@ -24,7 +24,7 @@ closeBtn.addEventListener("click", closePopup );
 
 //********************* Функция из описания спринта.*******************************
 
-let formElement = document.querySelector(".form"); // Воспользуйтесь методом querySelector()
+let formElement = document.querySelector(".modal__form"); // Воспользуйтесь методом querySelector()
 
 function formSubmitHandler (evt) {
     evt.preventDefault(); 
