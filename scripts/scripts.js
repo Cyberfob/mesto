@@ -29,10 +29,10 @@ const initialCards = [
 //Инициализация переменных
 const popup = document.querySelector(".popup");
 
-const inputName = document.querySelector(".modal__input_name");
-const inputAbout = document.querySelector(".modal__input_about");
-const inputTitle = document.querySelector(".modal__input_title");
-const inputLink = document.querySelector(".modal__input_link");
+const inputName = document.querySelector(".modal__input_type_name");
+const inputAbout = document.querySelector(".modal__input_type_about");
+const inputTitle = document.querySelector(".modal__input_type_title");
+const inputLink = document.querySelector(".modal__input_type_link");
 
 const removeBtn = document.querySelector(".card__trashcan-btn");
 const saveBtn = document.querySelector(".modal__submit");
@@ -107,12 +107,12 @@ addBtn.addEventListener("click", openPopupAdd);
 
 
 
-let formElement = document.querySelector(".form");
-let formElementAdd = document.querySelector(".form-add"); // Воспользуйтесь методом querySelector()
+let formElement = document.querySelector(".modal__form");
+let formElementAdd = document.querySelector(".modal__form-add"); // Воспользуйтесь методом querySelector()
 
 function formSubmitHandler (e) {
     e.preventDefault(); 
-    if (e.target.classList.contains("form")) {
+    if (e.target.classList.contains("modal__form")) {
         inputName.value = profileName.textContent;
         inputAbout.value = profileAbout.textContent;
     
@@ -124,7 +124,7 @@ function formSubmitHandler (e) {
         popup.classList.remove("popup_active");
         console.log("form")
     }  
-    else if (e.target.classList.contains("form-add")) {
+    else if (e.target.classList.contains("modal__form-add")) {
         const newItem = cardTmp.content.cloneNode(true);
         newItem.querySelector(".card__title").textContent = inputTitle.value;
         newItem.querySelector(".card__img").src = inputLink.value;
@@ -135,7 +135,6 @@ function formSubmitHandler (e) {
         console.log("addform")
     }
 }
-
 
 // Прикрепляем обработчик к форме:
 // он будет следить за событием “submit” - «отправка»
