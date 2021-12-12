@@ -14,3 +14,9 @@
     height: 13.3px;
     z-index: 1;
 }
+
+.card__trashcan-btn:hover {
+    opacity: 0.5;
+    transition: 0.7s;
+    cursor: pointer;
+}
