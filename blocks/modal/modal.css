@@ -8,7 +8,9 @@
     color: #000;
     padding-left: 36px;
     justify-self: center;
-    margin: 8px auto 0px auto;
+    margin-top: 8px;
+    margin-right: 40px;
+    
     z-index: 2;
 }
 

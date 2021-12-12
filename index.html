@@ -19,9 +19,7 @@
                 <div class="profile__data">
                     <div class="profile__info">
                         <h1 class="profile__name">Жак-Ив Кусто</h1>
-                        <button class="profile__btn">
-                            <img src="./images/btn_img.svg" alt="Кнопка">
-                        </button>
+                        <button class="profile__btn"></button>
                     </div>
                     <p class="profile__about">Исследователь океана</p>
                 </div>
@@ -51,6 +49,18 @@
                     <input class="modal__input modal__input_name" maxlength="18" placeholder="Введите ваше имя" type="text" value="" name="name">
                     <input class="modal__input modal__input_about" maxlength="40" placeholder="Введите информацию о себе" type="text" value="" name="about">
                     <input class="modal__submit" type="submit" value="Сохранить">
+                </form>
+            </div>
+        </section>
+        <section class="popup-add">
+            <div class="popup__overlay"></div>
+            <input class="popup__close-btn" type="button" value=" ">
+            <div class="modal">
+                <h2 class="modal__title">Новое место</h2>
+                <form class="form" action="submit">
+                    <input class="modal__input modal__input_title" placeholder="Название" type="text" value="">
+                    <input class="modal__input modal__input_link" placeholder="Ссылка на картинку" type="text" value="">
+                    <input class="modal__submit" type="submit" value="Создать">
                 </form>
             </div>
         </section>
