@@ -8,13 +8,14 @@
     color: #000;
     padding-left: 36px;
     justify-self: center;
-    margin: 8px auto 0px auto;
+    margin: 8px 40px 0px 0px;
     z-index: 2;
 }
 
 @media screen and (max-width: 768px) {
     .modal {
         padding-left: 22px;
+        margin: 8px auto 0px auto;
     }
 }
 
