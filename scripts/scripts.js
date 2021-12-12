@@ -1,3 +1,29 @@
+const initialCards = [
+    {
+        name: 'Архыз',
+        link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/arkhyz.jpg'
+    },
+    {
+        name: 'Челябинская область',
+        link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/chelyabinsk-oblast.jpg'
+    },
+    {
+        name: 'Иваново',
+        link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/ivanovo.jpg'
+    },
+    {
+        name: 'Камчатка',
+        link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kamchatka.jpg'
+    },
+    {
+        name: 'Холмогорский район',
+        link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kholmogorsky-rayon.jpg'
+    },
+    {
+        name: 'Байкал',
+        link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/baikal.jpg'
+    }
+]; 
 //Инициализация переменных
 const popup = document.querySelector(".popup");
 const inputName = document.querySelector(".modal__input_name");
@@ -7,7 +33,29 @@ const closeBtn = document.querySelector(".popup__close-btn");
 const profileBtn = document.querySelector(".profile__btn");
 const profileName = document.querySelector(".profile__name");
 const profileAbout = document.querySelector(".profile__about");
-const cardLike = document.querySelectorAll(".card__like");
+
+const cardTmp = document.querySelector(".card__template");
+const cards = document.querySelector(".cards");
+// const cardLike = document.querySelectorAll(".card__like");
+
+initialCards.forEach(element => {
+    const newItem = cardTmp.content.cloneNode(true);
+    newItem.querySelector(".card__title").textContent = element.name;
+    newItem.querySelector(".card__img").src = element.link;
+    console.log(newItem);
+    cards.prepend(newItem);
+});
+
+function initCards (initialCards) {
+    Cards.forEach(element => {
+        const newItem = cardTmp.cloneNode(true);
+    });
+}
+
+
+
+
+
 
 //Функция открытия модального окна
 function openPopup () {
@@ -33,13 +81,7 @@ function savePopupData () {
 //Делаем проверку, что элемент имеет класс "card__like". Далее условие при котором мы свитчим 
 //наличие "card__like_active".
 function likeSwitch (e) {
-    let like = e.target;  
-    if (like.classList.contains("card__like") === true && like.classList.contains("card__like_active" ) !== true) {
-        like.classList.add("card__like_active");
-    }
-    else  {
-        like.classList.remove("card__like_active");
-    }
+    e.target.classList.toggle("card__like_active");
 }
 
 document.addEventListener("click",likeSwitch);
