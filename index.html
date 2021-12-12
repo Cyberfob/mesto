@@ -33,6 +33,7 @@
         </section>
         <template class="card__template">
             <div class="card">
+                <button class="card__trashcan-btn"></button>
                 <img class="card__img" src="" alt="">
                 <div class="card__footer">
                     <h3 class="card__title"></h3>
@@ -54,10 +55,10 @@
         </section>
         <section class="popup-add">
             <div class="popup__overlay"></div>
-            <input class="popup__close-btn" type="button" value=" ">
+            <input class="popup-add__close-btn" type="button" value=" ">
             <div class="modal">
                 <h2 class="modal__title">Новое место</h2>
-                <form class="form" action="submit">
+                <form class="form-add" action="submit">
                     <input class="modal__input modal__input_title" placeholder="Название" type="text" value="">
                     <input class="modal__input modal__input_link" placeholder="Ссылка на картинку" type="text" value="">
                     <input class="modal__submit" type="submit" value="Создать">

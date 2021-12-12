@@ -28,10 +28,16 @@ const initialCards = [
 
 //Инициализация переменных
 const popup = document.querySelector(".popup");
+
 const inputName = document.querySelector(".modal__input_name");
 const inputAbout = document.querySelector(".modal__input_about");
+const inputTitle = document.querySelector(".modal__input_title");
+const inputLink = document.querySelector(".modal__input_link");
+
+const removeBtn = document.querySelector(".card__trashcan-btn");
 const saveBtn = document.querySelector(".modal__submit");
 const closeBtn = document.querySelector(".popup__close-btn");
+const closeAddBtn = document.querySelector(".popup-add__close-btn");
 const profileBtn = document.querySelector(".profile__btn");
 const profileName = document.querySelector(".profile__name");
 const profileAbout = document.querySelector(".profile__about");
@@ -47,9 +53,16 @@ initialCards.forEach(element => {
     const newItem = cardTmp.content.cloneNode(true);
     newItem.querySelector(".card__title").textContent = element.name;
     newItem.querySelector(".card__img").src = element.link;
-    // console.log(newItem);
     cards.prepend(newItem);
 });
+
+//Функция удаления карточек
+function addCard (e) {
+    if (e.target.classList.contains("card__trashcan-btn")){
+        console.log(e.target.parentNode);
+        e.target.parentNode.remove();
+    }
+}
 
 //Функция открытия модального окна profile
 function openPopupProfile () {
@@ -58,14 +71,15 @@ function openPopupProfile () {
     inputAbout.value = profileAbout.textContent;
 }
 
+//Функция открытия модального окна Add
 function openPopupAdd () {
     popupAdd.classList.add("popup_active");
-    console.log("work");
 }
 
 //Функция закрытия модального окна БЕЗ сохнанения данных
-function closePopup () {
-    popup.classList.remove("popup_active");
+function closePopup (e) {
+    e.target.parentNode.classList.remove("popup_active");
+    console.log(e.target.parentNode.classList);
 }
 
 //Функция СОХРАНЕНИЯ данных и закрытия модального окна
@@ -84,35 +98,47 @@ function likeSwitch (e) {
 
 //Вызов эвентов
 document.addEventListener("click",likeSwitch);
+document.addEventListener("click",addCard);
 profileBtn.addEventListener("click", openPopupProfile);
 saveBtn.addEventListener("click", savePopupData);
 closeBtn.addEventListener("click", closePopup );
+closeAddBtn.addEventListener("click", closePopup);
 addBtn.addEventListener("click", openPopupAdd);
 
-//********************* Функция из описания спринта.*******************************
-// Находим форму в DOM
-let formElement = document.querySelector(".form"); // Воспользуйтесь методом querySelector()
-// Находим поля формы в DOM
- // Воспользуйтесь инструментом .querySelector() inputName.value
- // Воспользуйтесь инструментом .querySelector() inputAbout.value
-// Обработчик «отправки» формы, хотя пока
-// она никуда отправляться не будет
-function formSubmitHandler (evt) {
-    evt.preventDefault(); // Эта строчка отменяет стандартную отправку формы.
-// Так мы можем определить свою логику отправки.
-// О том, как это делать, расскажем позже.
 
-    // Получите значение полей jobInput и nameInput из свойства value
-    inputName.value = profileName.textContent;
-    inputAbout.value = profileAbout.textContent;
-    // Выберите элементы, куда должны быть вставлены значения полей
-    let nameInput = document.querySelector(".profile__name");
-    let jobInput = document.querySelector(".profile__about");
-    // Вставьте новые значения с помощью textContent
-    nameInput.textContent = inputName.value;
-    jobInput.textContent = inputAbout.value;
+
+let formElement = document.querySelector(".form");
+let formElementAdd = document.querySelector(".form-add"); // Воспользуйтесь методом querySelector()
+
+function formSubmitHandler (e) {
+    e.preventDefault(); 
+    if (e.target.classList.contains("form")) {
+        inputName.value = profileName.textContent;
+        inputAbout.value = profileAbout.textContent;
+    
+        let nameInput = document.querySelector(".profile__name");
+        let jobInput = document.querySelector(".profile__about");
+
+        nameInput.textContent = inputName.value;
+        jobInput.textContent = inputAbout.value;
+        popup.classList.remove("popup_active");
+        console.log("form")
+    }  
+    else if (e.target.classList.contains("form-add")) {
+        const newItem = cardTmp.content.cloneNode(true);
+        newItem.querySelector(".card__title").textContent = inputTitle.value;
+        newItem.querySelector(".card__img").src = inputLink.value;
+        inputTitle.value = "";
+        inputLink.value = "";
+        cards.prepend(newItem);
+        popupAdd.classList.remove("popup_active");
+        console.log("addform")
+    }
 }
+
 
 // Прикрепляем обработчик к форме:
 // он будет следить за событием “submit” - «отправка»
 formElement.addEventListener('submit', formSubmitHandler);
+formElementAdd.addEventListener('submit', formSubmitHandler);
+
