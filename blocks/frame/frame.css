@@ -1,0 +1,10 @@
+.frame {
+    z-index: 2;
+    display: flex;
+    flex-direction: column;
+    max-width: 470px;
+    margin: 195px auto 0px auto;
+    visibility: hidden;
+    opacity: 0;
+    
+}

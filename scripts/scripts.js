@@ -34,6 +34,11 @@ const inputAbout = document.querySelector(".modal__input_type_about");
 const inputTitle = document.querySelector(".modal__input_type_title");
 const inputLink = document.querySelector(".modal__input_type_link");
 
+const frameImg = document.querySelector(".frame__img");
+const frameTitle = document.querySelector(".frame__title");
+const frame = document.querySelector(".frame");
+const frameBtn = document.querySelector(".frame__btn");
+
 const removeBtn = document.querySelector(".card__trashcan-btn");
 const saveBtn = document.querySelector(".modal__submit");
 const closeBtn = document.querySelector(".popup__close-btn");
@@ -55,6 +60,21 @@ initialCards.forEach(element => {
     newItem.querySelector(".card__img").src = element.link;
     cards.prepend(newItem);
 });
+
+//Функция просмотра карточек
+function showCard (e) {
+    if (e.target.classList.contains("card__trashcan-btn")) {
+        return
+    }
+    else if (e.target.parentNode.classList.contains("card")) {
+        const tempItem = e.target.parentNode;
+        console.log(tempItem)
+        frameImg.src = tempItem.querySelector(".card__img").src;
+        frameTitle.textContent = tempItem.querySelector(".card__title").textContent;
+        console.log(frameImg.src, frameTitle.textContent);
+        frame.classList.add("popup_active");
+    }
+}
 
 //Функция удаления карточек
 function addCard (e) {
@@ -78,8 +98,15 @@ function openPopupAdd () {
 
 //Функция закрытия модального окна БЕЗ сохнанения данных
 function closePopup (e) {
-    e.target.parentNode.classList.remove("popup_active");
-    console.log(e.target.parentNode.classList);
+    if (e.target.classList.contains("frame__btn")){
+        frame.classList.remove("popup_active");
+    }
+    else{
+        e.target.parentNode.classList.remove("popup_active");
+        console.log(e.target);
+    }
+    
+    
 }
 
 //Функция СОХРАНЕНИЯ данных и закрытия модального окна
@@ -99,11 +126,14 @@ function likeSwitch (e) {
 //Вызов эвентов
 document.addEventListener("click",likeSwitch);
 document.addEventListener("click",addCard);
+document.addEventListener("click",showCard);
 profileBtn.addEventListener("click", openPopupProfile);
 saveBtn.addEventListener("click", savePopupData);
 closeBtn.addEventListener("click", closePopup );
 closeAddBtn.addEventListener("click", closePopup);
 addBtn.addEventListener("click", openPopupAdd);
+frameBtn.addEventListener("click",closePopup);
+
 
 
 
