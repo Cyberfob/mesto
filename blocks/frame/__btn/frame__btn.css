@@ -1,7 +1,7 @@
 .frame__btn {
     background: none;
     background-image: url(../../../images/Close_Icon.svg);
-    background: cover;
+    background-size: cover;
     border: none;
     padding: 0;
     width: 32px;
