@@ -64,3 +64,4 @@
 @import url(../blocks/popup-add/popup-add.css);
 @import url(../blocks/popup-add/_active/popup_active.css);
 @import url(../blocks/popup-add/__close-btn/popup-add__close-btn.css);
+@import url(../blocks/popup-add/__overlay/popup-add__overlay.css);
