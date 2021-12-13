@@ -28,17 +28,14 @@ const initialCards = [
 
 //Инициализация переменных
 const popup = document.querySelector(".popup");
-
 const inputName = document.querySelector(".modal__input_type_name");
 const inputAbout = document.querySelector(".modal__input_type_about");
 const inputTitle = document.querySelector(".modal__input_type_title");
 const inputLink = document.querySelector(".modal__input_type_link");
-
 const frameImg = document.querySelector(".frame__img");
 const frameTitle = document.querySelector(".frame__title");
 const frame = document.querySelector(".frame");
 const frameBtn = document.querySelector(".frame__btn");
-
 const removeBtn = document.querySelector(".card__trashcan-btn");
 const saveBtn = document.querySelector(".modal__submit");
 const closeBtn = document.querySelector(".popup__close-btn");
@@ -48,7 +45,6 @@ const profileName = document.querySelector(".profile__name");
 const profileAbout = document.querySelector(".profile__about");
 const addBtn = document.querySelector(".profile__add-btn");
 const popupAdd = document.querySelector(".popup-add");
-
 const cardTmp = document.querySelector(".card__template");
 const cards = document.querySelector(".cards");
 const cardLike = document.querySelectorAll(".card__like");
@@ -105,8 +101,6 @@ function closePopup (e) {
         e.target.parentNode.classList.remove("popup_active");
         console.log(e.target);
     }
-    
-    
 }
 
 //Функция СОХРАНЕНИЯ данных и закрытия модального окна
@@ -134,11 +128,9 @@ closeAddBtn.addEventListener("click", closePopup);
 addBtn.addEventListener("click", openPopupAdd);
 frameBtn.addEventListener("click",closePopup);
 
-
-
-
+//Инициализация модальных окон
 let formElement = document.querySelector(".modal__form");
-let formElementAdd = document.querySelector(".modal__form-add"); // Воспользуйтесь методом querySelector()
+let formElementAdd = document.querySelector(".modal__form-add"); 
 
 function formSubmitHandler (e) {
     e.preventDefault(); 
@@ -170,4 +162,3 @@ function formSubmitHandler (e) {
 // он будет следить за событием “submit” - «отправка»
 formElement.addEventListener('submit', formSubmitHandler);
 formElementAdd.addEventListener('submit', formSubmitHandler);
-

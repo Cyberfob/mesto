@@ -12,7 +12,6 @@
     box-sizing: border-box;
     width: 15.44px;
     height: 13.3px;
-    z-index: 1;
 }
 
 .card__trashcan-btn:hover {
