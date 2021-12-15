@@ -10,8 +10,9 @@
     background-repeat: no-repeat;
     background-size: 15px;
     box-sizing: border-box;
-    width: 15.44px;
-    height: 13.3px;
+    width: 18px;
+    height: 19px;
+    z-index: 1;
 }
 
 .card__trashcan-btn:hover {

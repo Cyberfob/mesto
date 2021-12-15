@@ -1,7 +1,7 @@
 .profile__btn {
     width: 24px;
     height: 24px;
-    border: 1px solid #FFFFFF;
+    border: 1px solid #ffffff;
     box-sizing: border-box;
     background: none;
     box-shadow: none;
@@ -20,7 +20,7 @@
     cursor: pointer;
 }
 
-@media screen and (max-width: 768px) {
+@media screen and (max-width: 800px) {
     .profile__btn {
         width: 18px;
         height: 18px;

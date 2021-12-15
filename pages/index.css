@@ -39,6 +39,11 @@
 @import url(../blocks/popup/popup.css);
 @import url(../blocks/popup/__overlay/popup__overlay.css);
 @import url(../blocks/popup/__close-btn/popup__close-btn.css);
+@import url(../blocks/popup/__close-btn/_margin-left/popup__close-btn_margin-left.css);
+@import url(../blocks/popup/_type/popup_type_add.css);
+@import url(../blocks/popup/_type/popup_type_pictures.css);
+@import url(../blocks/popup/_type/popup_type_profile.css);
+@import url(../blocks/popup/_active/popup_active.css);
 
 /* Modal */
 @import url(../blocks/modal/modal.css);
@@ -57,11 +62,4 @@
 @import url(../blocks/frame/__title/frame__title.css);
 @import url(../blocks/frame/__overlay/frame__overlay.css);
 @import url(../blocks/frame/__img/frame__img.css);
-@import url(../blocks/frame/__conteiner/frame__conteiner.css);
 @import url(../blocks/frame/__btn/frame__btn.css);
-
-/* Popup-add */
-@import url(../blocks/popup-add/popup-add.css);
-@import url(../blocks/popup-add/_active/popup_active.css);
-@import url(../blocks/popup-add/__close-btn/popup-add__close-btn.css);
-@import url(../blocks/popup-add/__overlay/popup-add__overlay.css);
