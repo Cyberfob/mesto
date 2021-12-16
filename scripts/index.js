@@ -75,7 +75,6 @@ function createCard (cardData) {
     const newCardImg = card.querySelector(".card__img");
     newCardImg.alt = cardData.name;
     newCardImg.src = cardData.link;
-    // console.log(element);
     card.querySelector(".card__img").addEventListener("click", (card) => {
         openPopupCardShow(card);
     });
@@ -89,7 +88,6 @@ function createCard (cardData) {
     //Функция открытия Popup
 function openPopup (popup) {
     popup.classList.add("popup_active");
-    //console.log("element");
 };
 
     //Функция открытия popupProfile
