@@ -53,7 +53,7 @@
 @import url(../blocks/modal/__form/modal__form.css);
 @import url(../blocks/modal/form-add/modal__form-add.css);
 @import url(../blocks/modal/__lable/modal__lable.css);
-@import url(../blocks/modal/__input/_error/modal__input_error.css);
+@import url(../blocks/modal/__input-error/modal__input-error.css);
 @import url(../blocks/modal/__fieldset/modal__fieldset.css);
 @import url(../blocks/modal/__input/_type/modal__input_type_error.css);
 @import url(../blocks/modal/__input/_error/modal__input_error_visible.css);
