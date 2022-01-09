@@ -122,7 +122,7 @@ function likeSwitch (e) {
 }
 
 //Функция отправки формы Profile
-function handlerProfileSubmit (e) {
+function handlProfileSubmit (e) {
     e.preventDefault(); 
     profileName.textContent = inputName.value;
     profileAbout.textContent = inputAbout.value;
@@ -130,12 +130,11 @@ function handlerProfileSubmit (e) {
 }
 
 //Функция отправки формы CardAdd
-function handlerCardSubmit (e) {
+function handlCardSubmit (e) {
     e.preventDefault();
     const cardData = [{name: '',link: ''}];
     cardData.name = inputTitle.value;
     cardData.link = inputLink.value;
-    console.log(cardData.link);
     cards.prepend(createCard(cardData));
     closePopup(popupCardAdd);
     formPopupAddCard.reset();
@@ -170,5 +169,5 @@ buttonClosePopupImg.addEventListener("click", () => {
 });
 
     //Обработчики Form
-formPopupProfile.addEventListener('submit', handlerProfileSubmit);
-formPopupAddCard.addEventListener('submit', handlerCardSubmit);
+formPopupProfile.addEventListener('submit', handlProfileSubmit);
+formPopupAddCard.addEventListener('submit', handlCardSubmit);

@@ -1,0 +1,10 @@
+.modal__input_error {
+    position: absolute;
+    font-weight: normal;
+    font-size: 12px;
+    line-height: 15px;
+    color: #ff0000;
+    margin-top: 25px;
+    max-width: 365px;
+    display: none;
+}
