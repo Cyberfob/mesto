@@ -66,6 +66,8 @@ const cardTitle = popupCardShow.querySelector(".frame__title");
 const profileName = document.querySelector(".profile__name");
 const profileAbout = document.querySelector(".profile__about");
 
+const overlayList = document.querySelectorAll(".popup__overlay")
+
 //Функции--------------------------------------------------------------------
 
 //Функция добавления карточек
@@ -88,6 +90,8 @@ function createCard (cardData) {
     //Функция открытия Popup
 function openPopup (popup) {
     popup.classList.add("popup_active");
+    document.addEventListener("click",closedPopupOverlayClick);
+    document.addEventListener("keyup",closedEscBtn);
 };
 
     //Функция открытия popupProfile
@@ -109,6 +113,8 @@ function openPopupCardShow (card) {
 //Функция закрытия Popup
 function closePopup (popup) {
     popup.classList.remove("popup_active");
+    document.removeEventListener("click",closedPopupOverlayClick);
+    document.removeEventListener("keyup",closedEscBtn);
 };
 
 //Функция удаления карточек
@@ -138,6 +144,22 @@ function handlCardSubmit (e) {
     cards.prepend(createCard(cardData));
     closePopup(popupCardAdd);
     formPopupAddCard.reset();
+}
+
+//Функция закрытия открытого popup по кнопке "Esc"
+function closedEscBtn(e) {
+    if (e.code === 'Escape') {
+        const popup = document.querySelector('.popup_active');
+        closePopup(popup);
+    }
+}
+
+//Функция закрытия по клику на overlay открытого popup
+function closedPopupOverlayClick(e) {
+    if (e.target.classList.contains('popup__overlay')){ 
+        const popup = e.target.closest('.popup');
+        closePopup(popup);
+    }
 }
 
 //Инициализация карточек при старте из массива-----------------------------------------
