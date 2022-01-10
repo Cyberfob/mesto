@@ -8,13 +8,10 @@ const validationConfig = {
     errorClass: 'modal__input_error_visible'
 }
 
-//Inputs (масив всех инпутов страницы)
-const inputs = document.querySelectorAll(".modal__input");
-
 //Функции--------------------------------------------------------------------
 
 //Функция показа сообщения об ошибке при валидации формы
-const showInputError = (formElement, inputElement, errorMessage) => {
+const showInputError = (formElement, inputElement, errorMessage, validationConfig) => {
     const errorElement = formElement.querySelector(`#${inputElement.id}Error`);
     inputElement.classList.add(validationConfig.inputErrorClass);
     errorElement.textContent = errorMessage;
@@ -22,7 +19,7 @@ const showInputError = (formElement, inputElement, errorMessage) => {
 }
 
 //Функция скрития ошибки когда форма валидна
-const hideInputError = (formElement, inputElement,) => {
+const hideInputError = (formElement, inputElement, validationConfig) => {
     const errorElement = formElement.querySelector(`#${inputElement.id}Error`);
     inputElement.classList.remove(validationConfig.inputErrorClass);
     errorElement.textContent = "";
@@ -30,12 +27,12 @@ const hideInputError = (formElement, inputElement,) => {
 }
 
 //Функция проверки формы на валидность
-const isValid = (formElement, inputElement) => {
+const isValid = (formElement, inputElement, validationConfig) => {
     if (!inputElement.validity.valid) {
-        showInputError(formElement, inputElement, inputElement.validationMessage);
+        showInputError(formElement, inputElement, inputElement.validationMessage, validationConfig);
     }
     else {
-        hideInputError(formElement, inputElement);
+        hideInputError(formElement, inputElement, validationConfig);
     }
 };
 
@@ -46,27 +43,37 @@ const hasInvalidInput = (inputsList) => {
     });
 };
 
+//Функция отключения кнопки submit
+const disablingButton = (buttonElement, validationConfig) => {
+    buttonElement.classList.add(validationConfig.inactiveButtonClass);
+    buttonElement.setAttribute('disabled', true);
+};
+
+//Функция включения кнопки submit
+const enablingButton = (buttonElement, validationConfig) => {
+    buttonElement.classList.remove(validationConfig.inactiveButtonClass);
+    buttonElement.removeAttribute('disabled', true);
+}
+
 //Функция изменения активности кнопки submit
-const toggleButtonState = (inputsList, buttonElement) => {
+const toggleButtonState = (inputsList, buttonElement, validationConfig) => {
     if (hasInvalidInput(inputsList)) {
-        buttonElement.classList.add(validationConfig.inactiveButtonClass);
-        buttonElement.setAttribute('disabled', true);
+        disablingButton(buttonElement, validationConfig);
     }
     else {
-        buttonElement.classList.remove(validationConfig.inactiveButtonClass);
-        buttonElement.removeAttribute('disabled', true);
+        enablingButton(buttonElement, validationConfig);
     }
 };
 
 //Функция назначения слушателей для полей ввода (Inputs) и деактивация кнопки submit при первом открытии форм
-const setEventListeners = (formElement) => {
+const setEventListeners = (formElement, validationConfig) => {
     const inputsList = Array.from(formElement.querySelectorAll(validationConfig.inputSelector));
     const buttonElement = formElement.querySelector(validationConfig.submitButtonSelector);
-    toggleButtonState(inputsList, buttonElement);
+    toggleButtonState(inputsList, buttonElement, validationConfig);
     inputsList.forEach(inputElement => {
         inputElement.addEventListener("input", () => {
-            isValid(formElement, inputElement);
-            toggleButtonState(inputsList, buttonElement);
+            isValid(formElement, inputElement, validationConfig);
+            toggleButtonState(inputsList, buttonElement, validationConfig);
         });
     });
 };
@@ -78,7 +85,7 @@ const enableValidation = (validationConfig) => {
         formElement.addEventListener("submit", e => {
             e.preventDefault();
         });
-        setEventListeners(formElement);
+        setEventListeners(formElement, validationConfig);
     });
 };
 enableValidation(validationConfig);
