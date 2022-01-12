@@ -46,8 +46,10 @@ const buttonRemoveCard = document.querySelector(".card__trashcan-btn");
     //Open Popup
 const buttonOpenPopupAddCard = document.querySelector(".profile__add-btn");
 const buttonOpenPopupProfile = document.querySelector(".profile__btn");
-    //Add Card
-const buttonAdd = document.querySelector("#addButton");
+    //Add Submit
+const buttonAddSubmit = document.querySelector("#addButton");
+    //Profile Submit
+const buttonProfileSubmit = document.querySelector("#profileSubmitBtn");
 
 // Forms
 const formPopupProfile = document.querySelector(".modal__form_type_profile");
@@ -88,7 +90,6 @@ function createCard (cardData) {
 function openPopup (popup) {
     popup.classList.add("popup_active");
     document.addEventListener("keyup",closedEscBtn);
-    enableValidation(validationConfig);
 };
 
     //Функция открытия popupProfile
@@ -96,6 +97,7 @@ function openPopupProfile (popup) {
     inputName.value = profileName.textContent;
     inputAbout.value = profileAbout.textContent;
     openPopup(popup);
+    enablingButton(buttonProfileSubmit, validationConfig);
 };
 
     //Функция открытия popupCardShow
@@ -141,6 +143,7 @@ function handlCardSubmit (e) {
     cards.prepend(createCard(cardData));
     closePopup(popupCardAdd);
     formPopupAddCard.reset();
+    disablingButton(buttonAddSubmit, validationConfig);
 }
 
 //Функция закрытия открытого popup по кнопке "Esc"
