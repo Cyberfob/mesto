@@ -1,4 +1,6 @@
-import Card from "./FormValidator.js"
+import Card from "./Card.js"
+import FormValidator from "./FormValidator.js"
+
 //Инициализация массива с карточками-------------------------------------------------------
 const initialCards = [
     {
@@ -27,6 +29,16 @@ const initialCards = [
     }
 ]; 
 
+//Конфиг
+const validationConfig = {
+    formSelector: '.modal__form',
+    inputSelector: '.modal__input',
+    submitButtonSelector: '.modal__submit',
+    inactiveButtonClass: 'modal__submit_disabled',
+    inputErrorClass: 'modal__input_type_error',
+    errorClass: 'modal__input_error_visible'
+}
+
 //Инициализация переменных-----------------------------------------------------------------
 
 //Popups
@@ -42,24 +54,18 @@ const inputTitle = popupCardAdd.querySelector(".modal__input_type_title");
 const inputLink = popupCardAdd.querySelector(".modal__input_type_link");
 
 //Buttons
-    //Remove Card
-const buttonRemoveCard = document.querySelector(".card__trashcan-btn");
     //Open Popup
 const buttonOpenPopupAddCard = document.querySelector(".profile__add-btn");
 const buttonOpenPopupProfile = document.querySelector(".profile__btn");
     //Add Submit
-const buttonAddSubmit = document.querySelector("#addButton");
-    //Profile Submit
-const buttonProfileSubmit = document.querySelector("#profileSubmitBtn");
 
 // Forms
 const formPopupProfile = document.querySelector(".modal__form_type_profile");
 const formPopupAddCard = document.querySelector(".modal__form_type_add-card");
-
+const formPopupList = document.querySelectorAll(".modal__form");
 //Cards
 const cardTemplate = document.querySelector(".card__template");
 const cards = document.querySelector(".cards");
-const cardLike = cards.querySelectorAll(".card__like");
 
 //Переменные хранения пользовательской информации
 const cardImg = popupCardShow.querySelector(".frame__img");
@@ -70,7 +76,7 @@ const profileAbout = document.querySelector(".profile__about");
 
 //Функции--------------------------------------------------------------------
 
-//Функция добавления карточек
+// //Функция добавления карточек
 function createCard (cardData) {
     const card = cardTemplate.content.querySelector(".card").cloneNode(true);
     card.querySelector(".card__title").textContent = cardData.name;
@@ -98,10 +104,10 @@ function openPopupProfile (popup) {
     inputName.value = profileName.textContent;
     inputAbout.value = profileAbout.textContent;
     openPopup(popup);
-    enablingButton(buttonProfileSubmit, validationConfig);
+    enablingButton(popup);
 };
 
-    //Функция открытия popupCardShow
+//     //Функция открытия popupCardShow
 function openPopupCardShow (card) {
     const cardData = card.target.closest(".card");
     cardImg.src = cardData.querySelector(".card__img").src;
@@ -117,12 +123,12 @@ function closePopup (popup) {
     document.removeEventListener("keyup",closedEscBtn);
 };
 
-//Функция удаления карточек
+// //Функция удаления карточек
 function deleteCard (e) {
     e.target.closest(".card").remove();
 }
 
-// Функция лайкнуть фото
+// // Функция лайкнуть фото
 function likeSwitch (e) {
     e.target.classList.toggle("card__like_active");
 }
@@ -135,6 +141,17 @@ function handlProfileSubmit (e) {
     closePopup(popupProfile);
 }
 
+//Функция скрытия кнопки
+const disablingButton = (e) => {
+    e.target.querySelector(validationConfig.submitButtonSelector).classList.add(validationConfig.inactiveButtonClass);
+    e.target.querySelector(validationConfig.submitButtonSelector).setAttribute('disabled', true);
+};
+//Функция активации кнопки
+const enablingButton = (popup) => {
+    popup.querySelector(validationConfig.submitButtonSelector).classList.remove(validationConfig.inactiveButtonClass);
+    popup.querySelector(validationConfig.submitButtonSelector).removeAttribute('disabled', true);
+};
+
 //Функция отправки формы CardAdd
 function handlCardSubmit (e) {
     e.preventDefault();
@@ -144,7 +161,7 @@ function handlCardSubmit (e) {
     cards.prepend(createCard(cardData));
     closePopup(popupCardAdd);
     formPopupAddCard.reset();
-    disablingButton(buttonAddSubmit, validationConfig);
+    disablingButton(e);
 }
 
 //Функция закрытия открытого popup по кнопке "Esc"
@@ -157,7 +174,15 @@ function closedEscBtn(e) {
 
 //Инициализация карточек при старте из массива-----------------------------------------
 initialCards.forEach(cardData => {
-    cards.prepend(createCard(cardData));
+    const cardItem = new Card(".card__template",cardData, popupCardShow, openPopup)
+    cards.prepend(cardItem.getView());
+});
+
+//Инициализация валидации форм при старте-----------------------------------------
+formPopupList.forEach(formItem => {
+    const formPopupItem = new FormValidator (validationConfig,formItem)
+    formPopupItem.enableValidation();
+
 });
 
 //Обработчики событий------------------------------------------------------------------
