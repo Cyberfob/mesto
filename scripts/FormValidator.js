@@ -2,7 +2,7 @@ export default class FormValidator {
     constructor(validationConfig, formElement) {
         this._formElement = formElement;
         this._inputSelector = validationConfig.inputSelector;
-        this._submitButtonSelector = formElement.querySelector(validationConfig.submitButtonSelector);
+        this._submitButtonSelector = validationConfig.submitButtonSelector;
         this._inactiveButtonClass = validationConfig.inactiveButtonClass;
         this._inputErrorClass = validationConfig.inputErrorClass;
         this._errorClass = validationConfig.errorClass;
@@ -45,14 +45,14 @@ export default class FormValidator {
 
 //Функция отключения кнопки submit
     _disablingButton () {
-        this._submitButtonSelector.classList.add(this._inactiveButtonClass);
-        this._submitButtonSelector.setAttribute("disabled", true);
+        this._submitButton.classList.add(this._inactiveButtonClass);
+        this._submitButton.setAttribute("disabled", true);
     }
 
 //Функция включения кнопки submit
     _enablingButton() {
-        this._submitButtonSelector.classList.remove(this._inactiveButtonClass);
-        this._submitButtonSelector.removeAttribute("disabled", true);
+        this._submitButton.classList.remove(this._inactiveButtonClass);
+        this._submitButton.removeAttribute("disabled", true);
     }
 
 //Функция изменения активности кнопки submit
@@ -63,6 +63,18 @@ export default class FormValidator {
         else {
             this._enablingButton();
         }
+    }
+
+    resetButton() {
+        this._toggleButtonState();
+    }
+
+    resetValidation() {
+        this._toggleButtonState();
+
+        this._inpitsList.forEach(InputElement => {
+            this._hideInputError(InputElement);
+        });
     }
 
 //Функция назначения слушателей для полей ввода (Inputs) и деактивация кнопки submit при первом открытии форм
@@ -80,9 +92,9 @@ export default class FormValidator {
 
 //Функция инициирования валидации форм
     enableValidation() {
+        this._submitButton = this._formElement.querySelector(this._submitButtonSelector);
         this._formElement.addEventListener("submit", e => {e.preventDefault()});
         this._setEventListeners();
-        this._disablingButton ();
     }
 
 }

@@ -16,7 +16,7 @@ export default class Card {
     }
 //Метод лайкнуть фото
     _likeSwitch = () => {
-        this._element.querySelector(".card__like").classList.toggle("card__like_active")
+        this._likeButton.classList.toggle("card__like_active")
     }
 //Метод удаления карточек
     _deleteCard = () => {
@@ -24,9 +24,6 @@ export default class Card {
     }
 //Метод для  демонстрации фото
     _showCard = () => {
-        this._frameImg = this._popup.querySelector(".frame__img");
-        this._frameTitle = this._popup.querySelector(".frame__title");
-
         this._frameImg.alt = this._name;
         this._frameTitle.textContent = this._name;
         this._frameImg.src = this._link;
@@ -34,13 +31,17 @@ export default class Card {
     }
 //Метод установки слушателей
     _setEventListeners () {
-        this._element.querySelector(".card__like").addEventListener("click", this._likeSwitch);
-        this._element.querySelector(".card__trashcan-btn").addEventListener("click", this._deleteCard);
+        this._likeButton.addEventListener("click", this._likeSwitch);
+        this._trashcanButton.addEventListener("click", this._deleteCard);
         this._elementImg.addEventListener("click", this._showCard);
     }
 //Метод создания, заполнения и возврата карточки
     getView() {
         this._element = this._getTemplate();
+        this._likeButton = this._element.querySelector(".card__like");
+        this._trashcanButton = this._element.querySelector(".card__trashcan-btn");
+        this._frameImg = this._popup.querySelector(".frame__img");
+        this._frameTitle = this._popup.querySelector(".frame__title");
         //Заполнение карточки
         this._element.querySelector(".card__title").textContent = this._name;
         this._elementImg = this._element.querySelector(".card__img");
