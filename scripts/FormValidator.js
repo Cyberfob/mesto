@@ -80,6 +80,7 @@ export default class FormValidator {
 //Функция назначения слушателей для полей ввода (Inputs) и деактивация кнопки submit при первом открытии форм
     _setEventListeners () {
         this._inpitsList = Array.from(this._formElement.querySelectorAll(this._inputSelector))
+        this._submitButton = this._formElement.querySelector(this._submitButtonSelector);
         this._inpitsList.forEach(InputElement => {
             InputElement.addEventListener("input", () => {
                 
@@ -92,7 +93,6 @@ export default class FormValidator {
 
 //Функция инициирования валидации форм
     enableValidation() {
-        this._submitButton = this._formElement.querySelector(this._submitButtonSelector);
         this._formElement.addEventListener("submit", e => {e.preventDefault()});
         this._setEventListeners();
     }

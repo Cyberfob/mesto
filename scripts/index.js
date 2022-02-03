@@ -77,7 +77,7 @@ const formValidationList = {};
 // //Функция добавления карточек
 function createCard (cardData) {
     const cardItem = new Card(".card__template",cardData, popupCardShow, openPopup)
-    return cardItem;
+    return cardItem.getView();
 }
 
 //Функции открытия Popup
@@ -86,8 +86,8 @@ function createCard (cardData) {
 function openPopup (popup) {
     popup.classList.add("popup_active");
     document.addEventListener("keyup",closedEscBtn);
-    formValidationList['add'].resetButton();
-    formValidationList['profile'].resetValidation();
+
+    
 };
 
     //Функция открытия popupProfile
@@ -114,10 +114,10 @@ function handlProfileSubmit (e) {
 //Функция отправки формы CardAdd
 function handlCardSubmit (e) {
     e.preventDefault();
-    const cardData = [{name: '',link: ''}];
+    const cardData = {};
     cardData.name = inputTitle.value;
     cardData.link = inputLink.value;
-    cards.prepend(createCard(cardData).getView());
+    cards.prepend(createCard(cardData));
     closePopup(popupCardAdd);
     formPopupAddCard.reset();
 }
@@ -145,7 +145,7 @@ function enableValidation (config) {
 
 //Инициализация карточек при старте из массива-----------------------------------------
 initialCards.forEach(cardData => {
-    cards.prepend(createCard(cardData).getView());
+    cards.prepend(createCard(cardData));
 });
 
 //Обработчики событий------------------------------------------------------------------
@@ -153,9 +153,11 @@ initialCards.forEach(cardData => {
     //Open Popup
 buttonOpenPopupAddCard.addEventListener("click", () => {
     openPopup(popupCardAdd);
+    formValidationList['add'].resetButton();
 });
 buttonOpenPopupProfile.addEventListener("click", () => {
     openPopupProfile(popupProfile);
+    formValidationList['profile'].resetValidation();
 });
 
 //Close Popup
