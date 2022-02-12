@@ -1,5 +1,7 @@
 import Card from "./Card.js"
 import FormValidator from "./FormValidator.js"
+import PopupWithImage from "./PopupWithImage.js";
+import Section from "./Section.js";
 
 //Инициализация массива с карточками-------------------------------------------------------
 const initialCards = [
@@ -76,7 +78,11 @@ const formValidationList = {};
 
 // //Функция добавления карточек
 function createCard (cardData) {
-    const cardItem = new Card(".card__template",cardData, popupCardShow, openPopup)
+    const cardItem = new Card(".card__template",cardData, popupCardShow, { handleCardClick : () => {
+        const popupImage = new PopupWithImage (cardData, popupCardShow);
+        popupImage.open();
+    }
+    })
     return cardItem.getView();
 }
 
@@ -114,13 +120,23 @@ function handlProfileSubmit (e) {
 //Функция отправки формы CardAdd
 function handlCardSubmit (e) {
     e.preventDefault();
-    const cardData = {};
+    const cardData = [];
     cardData.name = inputTitle.value;
     cardData.link = inputLink.value;
-    cards.prepend(createCard(cardData));
+    const cardItem = new Card (".card__template",cardData, popupCardShow, { handleCardClick : () => {
+        const popupImage = new PopupWithImage (cardData, popupCardShow);
+        popupImage.open();
+        console.log("tut")
+    }
+    });
+    const cardElement = cardItem.getView();
+    const section = new Section ({items: cardElement, renderer: ()=>{}},cards)
+    section.addItem(cardElement);
     closePopup(popupCardAdd);
     formPopupAddCard.reset();
 }
+
+
 
 //Функция закрытия открытого popup по кнопке "Esc"
 function closedEscBtn(e) {
@@ -144,9 +160,25 @@ function enableValidation (config) {
 }
 
 //Инициализация карточек при старте из массива-----------------------------------------
-initialCards.forEach(cardData => {
-    cards.prepend(createCard(cardData));
-});
+//initialCards.forEach(cardData => {
+
+    const initialSection = new Section ({items : initialCards, renderer:()=>{
+        initialCards.forEach(item => {
+        const cardData = [];
+        cardData.name = item.name;
+        cardData.link = item.link;
+        const cardItem = new Card(".card__template",cardData, popupCardShow, { handleCardClick : () => {
+            const popupImage = new PopupWithImage (cardData, popupCardShow);
+            popupImage.open();
+            }
+        })
+        const cardElement = cardItem.getView();
+        initialSection.addItem(cardElement)
+    })
+}},cards);
+initialSection.renderer();
+  //  cards.prepend(createCard(cardData));
+//});
 
 //Обработчики событий------------------------------------------------------------------
 

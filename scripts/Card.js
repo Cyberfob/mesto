@@ -1,10 +1,11 @@
 export default class Card {
-    constructor(selector, cardItem, popup, popupOpen) {
+    constructor(selector, cardItem, popup, {handleCardClick}) {
         this._selector = selector;
         this._name = cardItem.name;
         this._link = cardItem.link;
         this._popup = popup;
-        this._popupOpen = popupOpen;
+        //this._popupOpen = popupOpen;
+        this._handleCardClick = handleCardClick;
     }
 // Метод клонирования разметки из шаблона
     _getTemplate() {
@@ -23,17 +24,19 @@ export default class Card {
         this._element.closest(".card").remove();
     }
 //Метод для  демонстрации фото
-    _showCard = () => {
-        this._frameImg.alt = this._name;
-        this._frameTitle.textContent = this._name;
-        this._frameImg.src = this._link;
-        this._popupOpen(this._popup);
-    }
+    //_showCard = () => {
+     //   this._frameImg.alt = this._name;
+     //   this._frameTitle.textContent = this._name;
+      //  this._frameImg.src = this._link;
+        //this._popupOpen(this._popup);
+   // }
 //Метод установки слушателей
     _setEventListeners () {
         this._likeButton.addEventListener("click", this._likeSwitch);
         this._trashcanButton.addEventListener("click", this._deleteCard);
-        this._elementImg.addEventListener("click", this._showCard);
+        //this._elementImg.addEventListener("click", this._showCard);
+
+        this._elementImg.addEventListener("click", this._handleCardClick);
     }
 //Метод создания, заполнения и возврата карточки
     getView() {
@@ -51,3 +54,10 @@ export default class Card {
         return this._element;
     }
 }
+
+
+// Преобразуйте класс Card
+// Свяжите класс Card c попапом. Сделайте так, чтобы Card 
+// принимал в конструктор функцию 
+// handleCardClick. Эта функция должна открывать попап с 
+// картинкой при клике на карточку.
