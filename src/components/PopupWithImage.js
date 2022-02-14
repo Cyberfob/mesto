@@ -1,4 +1,4 @@
-import Popup from "../scripts/Popup.js"
+import Popup from "./Popup.js"
 export default class PopupWithImage extends Popup {
     constructor (cardData,popupSelector) {
         super(popupSelector);
@@ -9,9 +9,8 @@ export default class PopupWithImage extends Popup {
         
     }
 
+    //Метод открытия попапа
     open() { //Вставить картинку и подпись, открыть попап
-        
-
         this._popupFrameImage.src = this._cardData.link;
         this._popupFrameImage.alt = this._cardData.name;
         this._popupFrameTitle.textContent = this._cardData.name

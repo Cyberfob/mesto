@@ -5,10 +5,12 @@ export default class Section {
         this._conteinerSelector =  conteinerSelector//document.querySelector(conteinerSelector);
     }
 
+    //Метод вызова функции колл-бэка
     renderer() {
         this._renderer();
     }
 
+    //Метод добавления карточки в DOM
     addItem(element) {
         this._conteinerSelector.prepend(element);
     }

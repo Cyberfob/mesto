@@ -4,12 +4,13 @@ export default class UserInfo {
         this._about = about
     }
 
+    //Метод возврата значений полей для формы "Профайл"
     getUserInfo = () => {
         return {name: this._name, about :this._about};
     }
 
+    //Метод записи новых данных из формы "Профайл"
     setUserInfo = (userData) => {
-        console.log("userData",userData)
         this._name = userData.name;
         this._about = userData.about;
     }

@@ -8,12 +8,14 @@ export default class PopupWithForm extends Popup {
         this._inputValue = {};
     }
 
+    //Метод закрытия попапа
     close() { //Закрываем форму и сбрасываем
         this._popupSelector.closest(".popup").classList.remove("popup_active");
         document.removeEventListener("keyup",this._handleEscClose);
         this._form.reset();
     }
 
+    //Метод сбора информации с инпутов формы
     _getInputValues = () => { //Собираем поля всех инпутов формы
         this._inputs.forEach(inputElement => {
             const elementName = inputElement.getAttribute("name");
@@ -21,7 +23,8 @@ export default class PopupWithForm extends Popup {
         })
     }
 
-    setEventListeners () { //Добавляем обработчики клика по крестику и сабмита формы
+    //Метод добавления обработчиков клика по крестику и сабмита формы
+    setEventListeners () { 
         this._form.addEventListener("submit", this._submit);
         this._popupSelector.addEventListener("click", (e) => {
             if (e.target.classList.contains("popup__overlay") || e.target.classList.contains("popup__close-btn")) {
