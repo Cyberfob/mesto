@@ -16,9 +16,9 @@ export default class PopupWithImage extends Popup {
         this._popupFrameImage.alt = this._cardData.name;
         this._popupFrameTitle.textContent = this._cardData.name
         this._popupSelector.classList.add("popup_active");
+        this._popupSelector.classList.add("popup_active");
+        document.addEventListener("keyup",this._handleEscClose);
     }
-
-    
 }
 
 // Создайте класс PopupWithImage
