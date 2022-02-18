@@ -2,17 +2,18 @@ export default class Section {
     constructor ({items, renderer}, conteinerSelector) {
         this._items = items;
         this._renderer = renderer;
-        this._conteinerSelector =  conteinerSelector//document.querySelector(conteinerSelector);
+        this._conteinerSelector = document.querySelector(conteinerSelector);
     }
-
-    //Метод вызова функции колл-бэка
-    renderer() {
-        this._renderer();
+    renderItems = () => {
+        this._items.forEach(cardElement => {
+            const elment = this._renderer(cardElement)
+            this.addItem(elment);
+        })
     }
 
     //Метод добавления карточки в DOM
-    addItem(element) {
-        this._conteinerSelector.prepend(element);
+    addItem = (item) => {
+        this._conteinerSelector.prepend(item);
     }
 }
 

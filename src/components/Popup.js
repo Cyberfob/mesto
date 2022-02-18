@@ -1,23 +1,25 @@
 export default class Popup {
     constructor (popupSelector) {
-        this._popupSelector = popupSelector;
+        this._popupSelector = document.querySelector(popupSelector);
     }
 
     //Метод открытия попапа
     open() { 
         this._popupSelector.classList.add("popup_active");
         document.addEventListener("keyup",this._handleEscClose);
+        //this._form.reset();
     }
 
     //Метод закрытия попапа
     close() {
         this._popupSelector.closest(".popup").classList.remove("popup_active");
         document.removeEventListener("keyup",this._handleEscClose);
+        this._form.reset();
     }
 
     //Метод навешивания слушателей
     setEventListeners() {
-        this._popupSelector.addEventListener("click", (e) => {
+        this._popupSelector.addEventListener("mousedown", (e) => {
             if (e.target.classList.contains("popup__overlay") || e.target.classList.contains("popup__close-btn")) {
                 this.close()
             }

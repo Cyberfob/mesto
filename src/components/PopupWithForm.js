@@ -4,33 +4,28 @@ export default class PopupWithForm extends Popup {
         super(popupSelector)
         this._submit = Submit;
         this._inputs = Array.from(this._popupSelector.querySelectorAll('.modal__input'));
-        this._form = popupSelector.querySelector(".modal__form")
+        this._form = this._popupSelector.querySelector(".modal__form")
         this._inputValue = {};
     }
 
     //Метод закрытия попапа
     close() { //Закрываем форму и сбрасываем
-        this._popupSelector.closest(".popup").classList.remove("popup_active");
-        document.removeEventListener("keyup",this._handleEscClose);
-        this._form.reset();
+        super.close();
     }
 
     //Метод сбора информации с инпутов формы
-    _getInputValues = () => { //Собираем поля всех инпутов формы
+    _getInputValues = () => { //Собираем поля всех инпутов формы)
         this._inputs.forEach(inputElement => {
             const elementName = inputElement.getAttribute("name");
             this._inputValue[elementName] = inputElement.value;
         })
+        return this._inputValue;
     }
 
     //Метод добавления обработчиков клика по крестику и сабмита формы
     setEventListeners () { 
+        super.setEventListeners();
         this._form.addEventListener("submit", this._submit);
-        this._popupSelector.addEventListener("click", (e) => {
-            if (e.target.classList.contains("popup__overlay") || e.target.classList.contains("popup__close-btn")) {
-                this.close()
-            }
-        });
     }
 }
 

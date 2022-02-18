@@ -3,7 +3,7 @@ export default class Card {
         this._selector = selector;
         this._name = cardItem.name;
         this._link = cardItem.link;
-        this._popup = popup;
+        this._popup = document.querySelector(popup);
         this._handleCardClick = handleCardClick;
     }
 
