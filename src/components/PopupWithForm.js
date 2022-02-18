@@ -11,6 +11,7 @@ export default class PopupWithForm extends Popup {
     //Метод закрытия попапа
     close() { //Закрываем форму и сбрасываем
         super.close();
+        this._form.reset();
     }
 
     //Метод сбора информации с инпутов формы

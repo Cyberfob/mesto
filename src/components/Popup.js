@@ -7,14 +7,12 @@ export default class Popup {
     open() { 
         this._popupSelector.classList.add("popup_active");
         document.addEventListener("keyup",this._handleEscClose);
-        //this._form.reset();
     }
 
     //Метод закрытия попапа
     close() {
         this._popupSelector.closest(".popup").classList.remove("popup_active");
         document.removeEventListener("keyup",this._handleEscClose);
-        this._form.reset();
     }
 
     //Метод навешивания слушателей
