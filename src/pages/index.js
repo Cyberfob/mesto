@@ -33,12 +33,12 @@ const userInfo = new UserInfo ({name:".profile__name", about: ".profile__about"}
 
 //Обьявление экземпляров класса попапов и навешивание слушателей
 const popupWithFormProfile = new PopupWithForm (".popup_type_profile", {Submit:() =>{
-    handlProfileSubmit(popupWithFormProfile._getInputValues());
+    handlProfileSubmit(popupWithFormProfile.getInputValues());
 }});
 popupWithFormProfile.setEventListeners();
 //---------//
 const popupWithFormAdd = new PopupWithForm (".popup_type_add", {Submit:() =>{
-    handlCardSubmit(popupWithFormAdd._getInputValues());
+    handlCardSubmit(popupWithFormAdd.getInputValues());
 }});
 popupWithFormAdd.setEventListeners();
 //---------//

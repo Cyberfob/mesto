@@ -15,7 +15,7 @@ export default class PopupWithForm extends Popup {
     }
 
     //Метод сбора информации с инпутов формы
-    _getInputValues = () => { //Собираем поля всех инпутов формы)
+    getInputValues = () => { //Собираем поля всех инпутов формы)
         this._inputs.forEach(inputElement => {
             const elementName = inputElement.getAttribute("name");
             this._inputValue[elementName] = inputElement.value;
