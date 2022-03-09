@@ -6,10 +6,16 @@ import PopupWithImage from "../components/PopupWithImage.js";
 import Section from "../components/Section.js";
 import UserInfo from "../components/UserInfo.js";
 import {validationConfig,initialCards} from "../untils/constant.js";
+import Api from '../components/Api';
 
 //Инициализация массива с карточками-------------------------------------------------------
 
-
+const api = new Api ({
+    baseUrl: 'https://mesto.nomoreparties.co/v1/cohort36',
+    headers: {
+      authorization: '308eaaab-711e-417d-8eb0-09fd4aa24c68',
+      'Content-Type': 'application/json'
+    }});
 //Инициализация переменных-----------------------------------------------------------------
 
 //Popups
@@ -108,3 +114,15 @@ buttonOpenPopupProfile.addEventListener("click", () => {
     //Вызов функции валидации
 enableValidation(validationConfig)
 
+
+
+
+  fetch('https://mesto.nomoreparties.co/v1/cohort36/users/me', {
+  headers: {
+    authorization: '308eaaab-711e-417d-8eb0-09fd4aa24c68'
+  }
+})
+  .then(res => res.json())
+  .then((result) => {
+    console.log(result);
+  }); 
