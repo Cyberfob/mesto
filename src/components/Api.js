@@ -1,28 +1,56 @@
 export default class Api {
     constructor (options) {
-        this.options = options;
+        this._url = options.url
+        this._headers = options.headers
     }
 
     getUserInfo() {
-
+        const request = {
+            method: "GET",
+            headers: this._headers,
+        } 
+        return fetch(`${this._url}/users/me`,request)
+    .then(res => {
+        if (res.ok) {
+            return res.json()
+        }
+        return Promise.reject(`Ошибка: ${res.status}`)
+    })
+    .catch((err) => {console.log(err)})
     }
+
+    setUserInfo({name,about}) {
+        const request = {
+            method: "PATCH",
+            headers: this._headers,
+            body: JSON.stringify({name,about})
+        }
+        return fetch(`${this._url}/users/me`,request)
+    .then(res => {
+        if (res.ok) {
+            return res.json()
+        }
+        return Promise.reject(`Ошибка: ${res.status}`)
+    })
+    .catch((err) => {console.log(err)})
+    }
+    
 
     getInitCards() {
-        fetch('https://mesto.nomoreparties.co/v1/cohort36/cards', {
-            headers: {
-                authorization: '308eaaab-711e-417d-8eb0-09fd4aa24c68'
-            }
+        const request = {
+            method: "GET",
+            headers: this._headers,
+        } 
+        return fetch(`${this._url}/cards`,request)
+    .then(res => {
+        if (res.ok) {
+            return res.json()
         }
-    )
-    .then(res => res.json())
-    .then((result) => {
-    console.log(result);
-        }); 
+        return Promise.reject(`Ошибка: ${res.status}`)
+    })
+    .catch((err) => {console.log(err)})
     }
 
-    setUserInfo() {
-
-    }
 
     addCard() {
 
@@ -34,5 +62,9 @@ export default class Api {
 
     removeCard() {
 
+    }
+
+    test() {
+        console.log(this.url)
     }
 }

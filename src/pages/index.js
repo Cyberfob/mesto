@@ -11,11 +11,19 @@ import Api from '../components/Api';
 //Инициализация массива с карточками-------------------------------------------------------
 
 const api = new Api ({
-    baseUrl: 'https://mesto.nomoreparties.co/v1/cohort36',
-    headers: {
-      authorization: '308eaaab-711e-417d-8eb0-09fd4aa24c68',
-      'Content-Type': 'application/json'
-    }});
+    url: 'https://mesto.nomoreparties.co/v1/cohort36',
+        headers: {
+            authorization: '308eaaab-711e-417d-8eb0-09fd4aa24c68',
+            'Content-Type': 'application/json'
+        }
+    }
+);
+
+//Инициализация данных при старте----------------------------------------------------------
+
+
+
+
 //Инициализация переменных-----------------------------------------------------------------
 
 //Popups
@@ -52,10 +60,16 @@ const popupImage = new PopupWithImage (".popup_type_pictures");
 popupImage.setEventListeners();
 
 //Обьявления экземпляра класса Section и отрисовка начального массива
-const section = new Section ({items: initialCards, renderer: (data)=>{
-    return createCard(data);
-    }},".cards")
-    section.renderItems();
+api.getInitCards().then(cardData => {
+    const section = new Section ({items: cardData, renderer: (data)=>{
+        return createCard(data);
+        }},".cards")
+        section.renderItems();
+})
+// const section = new Section ({items: initialCards, renderer: (data)=>{
+//     return createCard(data);
+//     }},".cards")
+//     section.renderItems();
 
 //Универсальная функция создания карточек
 function createCard(data) {
@@ -73,6 +87,7 @@ function createCard(data) {
 function handlProfileSubmit (inputs) {
     const userData = inputs; 
     userInfo.setUserInfo(userData);
+    api.setUserInfo(userData)
     popupWithFormProfile.close();
 }
 
@@ -114,15 +129,10 @@ buttonOpenPopupProfile.addEventListener("click", () => {
     //Вызов функции валидации
 enableValidation(validationConfig)
 
+///API-------------------------
 
-
-
-  fetch('https://mesto.nomoreparties.co/v1/cohort36/users/me', {
-  headers: {
-    authorization: '308eaaab-711e-417d-8eb0-09fd4aa24c68'
-  }
+api.getUserInfo()
+    .then(data => {
+        userInfo.setUserInfo({name: data.name, about: data.about})
 })
-  .then(res => res.json())
-  .then((result) => {
-    console.log(result);
-  }); 
+
