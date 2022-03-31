@@ -11,6 +11,11 @@ export default class Section {
         })
     }
 
+    renderItem = () => {
+        const element = this._renderer(this._items);
+        this.addItem(element);
+    }
+
     //Метод добавления карточки в DOM
     addItem = (item) => {
         this._conteinerSelector.prepend(item);

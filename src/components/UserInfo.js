@@ -1,7 +1,8 @@
 export default class UserInfo {
-    constructor({name,about}) {
+    constructor({name,about, avatar}) {
         this._name = document.querySelector(name);
         this._about = document.querySelector(about);
+        this._avatar = document.querySelector(avatar)
     }
 
     //Метод возврата значений полей для формы "Профайл"
@@ -13,6 +14,10 @@ export default class UserInfo {
     setUserInfo = (userData) => {
         this._name.textContent = userData.name;
         this._about.textContent = userData.about;
+    }
+
+    setUserAvatar (avatarLink) {
+        this._avatar.src = avatarLink;
     }
 }
 

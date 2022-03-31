@@ -7,7 +7,7 @@ import Section from "../components/Section.js";
 import UserInfo from "../components/UserInfo.js";
 import {validationConfig,initialCards} from "../untils/constant.js";
 import Api from '../components/Api';
-
+import PopupWithConfirmation from '../components/PopupWithConfirmation';
 //Инициализация массива с карточками-------------------------------------------------------
 
 const api = new Api ({
@@ -19,12 +19,10 @@ const api = new Api ({
     }
 );
 
-//Инициализация данных при старте----------------------------------------------------------
-
-
-
-
 //Инициализация переменных-----------------------------------------------------------------
+
+// userId
+const userId = "eed7b31a2644013072f6aaa4";
 
 //Popups
 const popupProfile = document.querySelector(".popup_type_profile");
@@ -37,13 +35,12 @@ const inputAbout = popupProfile.querySelector(".modal__input_type_about");
     //Open Popup
 const buttonOpenPopupAddCard = document.querySelector(".profile__add-btn");
 const buttonOpenPopupProfile = document.querySelector(".profile__btn");
-    //Add Submit
 
 //Массив для хранения экземпляров класса FormValidator с индексами по аттрибуту "name" у форм
 const formValidationList = {};
 
 //Экземпляр класса хранения данных пользователя
-const userInfo = new UserInfo ({name:".profile__name", about: ".profile__about"})
+const userInfo = new UserInfo ({name:".profile__name", about: ".profile__about", avatar: ".profile__foto"})
 
 //Обьявление экземпляров класса попапов и навешивание слушателей
 const popupWithFormProfile = new PopupWithForm (".popup_type_profile", {Submit:() =>{
@@ -56,8 +53,16 @@ const popupWithFormAdd = new PopupWithForm (".popup_type_add", {Submit:() =>{
 }});
 popupWithFormAdd.setEventListeners();
 //---------//
+const popupWithFormAvatar = new PopupWithForm (".popup_type_avatar", {Submit:() =>{
+    handlAvatarSubmit(popupWithFormAvatar.getInputValues());
+}});
+popupWithFormAvatar.setEventListeners();
+//---------//
 const popupImage = new PopupWithImage (".popup_type_pictures");
 popupImage.setEventListeners();
+//---------//
+const popupConfirmation = new PopupWithConfirmation (".popup_type_confirmation")
+popupConfirmation.setEventListeners();
 
 //Обьявления экземпляра класса Section и отрисовка начального массива
 api.getInitCards().then(cardData => {
@@ -66,18 +71,39 @@ api.getInitCards().then(cardData => {
         }},".cards")
         section.renderItems();
 })
-// const section = new Section ({items: initialCards, renderer: (data)=>{
-//     return createCard(data);
-//     }},".cards")
-//     section.renderItems();
 
 //Универсальная функция создания карточек
 function createCard(data) {
     const cardData = {};
     cardData.name = data.name;
     cardData.link = data.link;
+    cardData.likesCount = data.likes.length;
+    cardData.cardId = data._id;
+    cardData.ownerId = data.owner._id;
+    cardData.userId = userId
+    cardData.likeStatus = data.likes.some((element) => {return element.name == userInfo.getUserInfo().name})
+    //Создание экземпляра класса Card
     const cardItem = new Card(".card__template",cardData, ".popup_type_pictures", { handleCardClick : () => {
         popupImage.open(cardData);
+        },
+        hendlDeleteCard: () => {
+            popupConfirmation.open();
+            popupConfirmation.setSubmitAction(() => {api.removeCard(data._id)
+            .then(cardItem.deleteCard())
+            .then(popupConfirmation.delevent())
+            .then(popupConfirmation.close())})
+        },
+        hendlSwitchLike: () => {
+            if (!cardItem.likeStatus) {
+                api.setLike(data._id).then(res => {
+                    cardItem.likeRender(res.likes);
+                })
+            }
+            else {
+                api.deleteLike(data._id).then(res => {
+                    cardItem.likeRender(res.likes);
+                })
+            }
         }
     })
     return cardItem.getView();
@@ -85,18 +111,59 @@ function createCard(data) {
 
 //Функция отправки формы Profile
 function handlProfileSubmit (inputs) {
-    const userData = inputs; 
-    userInfo.setUserInfo(userData);
+    const userData = inputs;
     api.setUserInfo(userData)
-    popupWithFormProfile.close();
+    .then(data => {
+        userInfo.setUserInfo({name: data.name, about: data.about});
+    })
+    .finally(() => {
+        popupWithFormProfile.close();
+        switchButtonState(false,popupWithFormProfile.saveBtn)
+    })
+    switchButtonState(true,popupWithFormProfile.saveBtn)
 }
 
 //Функция отправки формы CardAdd
 function handlCardSubmit (inputs) {
-    const cardElement = createCard(inputs);
-    section.addItem(cardElement);
-    popupWithFormAdd.close();
+    api.addCard(inputs)
+    .then(card => {
+        const section = new Section ({items: card, renderer: (data)=>{
+            return createCard(data);
+            }},".cards")
+            section.renderItem();
+    })
+    .finally(() => {
+        popupWithFormAdd.close();
+        switchButtonState(false,popupWithFormAdd.saveBtn)
+    })
+    switchButtonState(true,popupWithFormAdd.saveBtn)
 }
+
+//Функция отправки формы avatar
+function handlAvatarSubmit(inputs) {
+    api.setProfileAvatar(inputs.link)
+    .then(data => {
+        userInfo.setUserAvatar(data.avatar)
+    })
+    .finally(() => {
+        popupWithFormAvatar.close();
+        switchButtonState(false,popupWithFormAvatar.saveBtn)
+    })
+    .catch(() => {alert(`Ошибка обновления аватара \n  Ссылка должна содержать ссылку на изображение`)
+    })
+    switchButtonState(true,popupWithFormAvatar.saveBtn)
+}
+
+//Функция смены состояния кнопки
+function switchButtonState (bool,btn) {
+    if (bool) {
+        btn.textContent = btn.value + "...";
+    }
+    else {
+        btn.textContent = btn.value;
+    }
+}
+// картинка для тестов https://www.1zoom.ru/big2/484/247680-svetik.jpg
 
 //Функция создания экземпляров класса FormValidator, инициализация валидации и 
 //добавление объекта в массив  formValidationList
@@ -126,13 +193,18 @@ buttonOpenPopupProfile.addEventListener("click", () => {
     formValidationList['profile'].resetValidation();
 });
 
+document.querySelector(".profile__foto-overlay").addEventListener("click", () => {
+    popupWithFormAvatar.open();
+    formValidationList['avatar'].resetValidation();
+})
+
     //Вызов функции валидации
 enableValidation(validationConfig)
 
-///API-------------------------
-
+///Инициализация данных пользователя с сервера 
 api.getUserInfo()
     .then(data => {
-        userInfo.setUserInfo({name: data.name, about: data.about})
+        userInfo.setUserInfo({name: data.name, about: data.about});
+        userInfo.setUserAvatar(data.avatar);
 })
 
