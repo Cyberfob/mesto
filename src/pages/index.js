@@ -5,7 +5,7 @@ import PopupWithForm from "../components/PopupWithForm.js";
 import PopupWithImage from "../components/PopupWithImage.js";
 import Section from "../components/Section.js";
 import UserInfo from "../components/UserInfo.js";
-import {validationConfig,initialCards} from "../untils/constant.js";
+import {validationConfig} from "../untils/constant.js";
 import Api from '../components/Api';
 import PopupWithConfirmation from '../components/PopupWithConfirmation';
 //Инициализация массива с карточками-------------------------------------------------------
@@ -63,14 +63,31 @@ popupImage.setEventListeners();
 //---------//
 const popupConfirmation = new PopupWithConfirmation (".popup_type_confirmation")
 popupConfirmation.setEventListeners();
+//---------//
+const section = new Section ({renderer: (data)=>{
+    return createCard(data);
+    }},".cards")
+
+// api.getInitCards().then(cardData => {
+//         section.renderItems(cardData);
+// })
+
+Promise.all([api.getInitCards(), api.getUserInfo()])
+    .then(([cards, data]) => {
+        section.renderItems(cards);
+        userInfo.setUserInfo({name: data.name, about: data.about});
+        userInfo.setUserAvatar(data.avatar);
+    })
+    .catch(() => {alert(`Ошибка загрузки \n  Обновите пожалуйста страницу, для этого нажмите "F5"`)
+    })
 
 //Обьявления экземпляра класса Section и отрисовка начального массива
-api.getInitCards().then(cardData => {
-    const section = new Section ({items: cardData, renderer: (data)=>{
-        return createCard(data);
-        }},".cards")
-        section.renderItems();
-})
+// api.getInitCards().then(cardData => {
+//     const section = new Section ({items: cardData, renderer: (data)=>{
+//         return createCard(data);
+//         }},".cards")
+//         section.renderItems();
+// })
 
 //Универсальная функция создания карточек
 function createCard(data) {
@@ -81,7 +98,7 @@ function createCard(data) {
     cardData.cardId = data._id;
     cardData.ownerId = data.owner._id;
     cardData.userId = userId
-    cardData.likeStatus = data.likes.some((element) => {return element.name == userInfo.getUserInfo().name})
+    cardData.likeStatus = data.likes.some((element) => {return element._id == userId})
     //Создание экземпляра класса Card
     const cardItem = new Card(".card__template",cardData, ".popup_type_pictures", { handleCardClick : () => {
         popupImage.open(cardData);
@@ -91,17 +108,27 @@ function createCard(data) {
             popupConfirmation.setSubmitAction(() => {api.removeCard(data._id)
             .then(cardItem.deleteCard())
             .then(popupConfirmation.delevent())
-            .then(popupConfirmation.close())})
+            .then(popupConfirmation.close())
+            .catch(() => {alert(`Ошибка удаления карточки \n  попробуйте еще раз`)
+            })
+        })
+            
         },
         hendlSwitchLike: () => {
             if (!cardItem.likeStatus) {
-                api.setLike(data._id).then(res => {
+                api.setLike(data._id)
+                .then(res => {
                     cardItem.likeRender(res.likes);
+                })
+                .catch(() => {alert(`Ошибка установки лайка \n  попробуйте еще раз`)
                 })
             }
             else {
-                api.deleteLike(data._id).then(res => {
+                api.deleteLike(data._id)
+                .then(res => {
                     cardItem.likeRender(res.likes);
+                })
+                .catch(() => {alert(`Ошибка удаления лайка \n  попробуйте еще раз`)
                 })
             }
         }
@@ -116,9 +143,12 @@ function handlProfileSubmit (inputs) {
     .then(data => {
         userInfo.setUserInfo({name: data.name, about: data.about});
     })
+    .then(() => {popupWithFormAdd.close();
+    })
     .finally(() => {
-        popupWithFormProfile.close();
         switchButtonState(false,popupWithFormProfile.saveBtn)
+    })
+    .catch(() => {alert(`Ошибка отправки данных \n  попробуйте еще раз`)
     })
     switchButtonState(true,popupWithFormProfile.saveBtn)
 }
@@ -127,14 +157,20 @@ function handlProfileSubmit (inputs) {
 function handlCardSubmit (inputs) {
     api.addCard(inputs)
     .then(card => {
-        const section = new Section ({items: card, renderer: (data)=>{
-            return createCard(data);
-            }},".cards")
-            section.renderItem();
+        section.renderItem(card);
+        // const element = createCard(card)
+        // console.log(element)
+        // section.addItem(element);
+        // const section = new Section ({items: card, renderer: (data)=>{
+        //     return createCard(data);
+        //     }},".cards")
+            //section.renderItem();
     })
+    .then(() => {popupWithFormAdd.close();})
     .finally(() => {
-        popupWithFormAdd.close();
         switchButtonState(false,popupWithFormAdd.saveBtn)
+    })
+    .catch(() => {alert(`Ошибка добавления карточки \n  попробуйте еще раз`)
     })
     switchButtonState(true,popupWithFormAdd.saveBtn)
 }
@@ -145,8 +181,9 @@ function handlAvatarSubmit(inputs) {
     .then(data => {
         userInfo.setUserAvatar(data.avatar)
     })
+    then(() => {popupWithFormAvatar.close();
+    })
     .finally(() => {
-        popupWithFormAvatar.close();
         switchButtonState(false,popupWithFormAvatar.saveBtn)
     })
     .catch(() => {alert(`Ошибка обновления аватара \n  Ссылка должна содержать ссылку на изображение`)
@@ -202,9 +239,9 @@ document.querySelector(".profile__foto-overlay").addEventListener("click", () =>
 enableValidation(validationConfig)
 
 ///Инициализация данных пользователя с сервера 
-api.getUserInfo()
-    .then(data => {
-        userInfo.setUserInfo({name: data.name, about: data.about});
-        userInfo.setUserAvatar(data.avatar);
-})
+// api.getUserInfo()
+//     .then(data => {
+//         userInfo.setUserInfo({name: data.name, about: data.about});
+//         userInfo.setUserAvatar(data.avatar);
+// })
 

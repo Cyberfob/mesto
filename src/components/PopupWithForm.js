@@ -3,10 +3,10 @@ export default class PopupWithForm extends Popup {
     constructor (popupSelector, {Submit}) {
         super(popupSelector)
         this._submit = Submit;
-        this._inputs = Array.from(this._popupSelector.querySelectorAll('.modal__input'));
-        this._form = this._popupSelector.querySelector(".modal__form")
+        this._inputs = Array.from(this._popup.querySelectorAll('.modal__input'));
+        this._form = this._popup.querySelector(".modal__form")
         this._inputValue = {};
-        this.saveBtn = this._popupSelector.querySelector(".modal__submit")
+        this.saveBtn = this._popup.querySelector(".modal__submit")
     }
 
     //Метод закрытия попапа

@@ -4,20 +4,20 @@ export default class Api {
         this._headers = options.headers
     }
 
+    _checkResponse(res) {
+        if (res.ok) {
+            return res.json()
+        }       
+        return Promise.reject(`Ошибка: ${res.status}`)
+    }
+
     getUserInfo() {
         const request = {
             method: "GET",
             headers: this._headers,
         } 
         return fetch(`${this._url}/users/me`,request)
-            .then(res => {
-                if (res.ok) {
-                    return res.json()
-                }       
-                return Promise.reject(`Ошибка: ${res.status}`)
-            })
-            .catch((err) => {console.log(err)
-            })
+            .then(this._checkResponse)
     }
 
     setUserInfo({name,about}) {
@@ -27,13 +27,7 @@ export default class Api {
             body: JSON.stringify({name,about})
         }
         return fetch(`${this._url}/users/me`,request)
-    .then(res => {
-        if (res.ok) {
-            return res.json()
-        }
-        return Promise.reject(`Ошибка: ${res.status}`)
-    })
-    .catch((err) => {console.log(err)})
+            .then(this._checkResponse)
     }
     
 
@@ -43,13 +37,7 @@ export default class Api {
             headers: this._headers,
         } 
         return fetch(`${this._url}/cards`,request)
-    .then(res => {
-        if (res.ok) {
-            return res.json()
-        }
-        return Promise.reject(`Ошибка: ${res.status}`)
-    })
-    .catch((err) => {console.log(err)})
+        .then(this._checkResponse)
     }
 
 
@@ -60,14 +48,7 @@ export default class Api {
             body: JSON.stringify({name,link})
         } 
         return fetch(`${this._url}/cards`,request)
-            .then(res => {
-                if (res.ok) {
-                    return res.json()
-                }       
-                return Promise.reject(`Ошибка: ${res.status}`)
-            })
-            .catch((err) => {console.log(err)
-            })
+        .then(this._checkResponse)
     }
 
 
@@ -77,14 +58,7 @@ export default class Api {
             headers: this._headers,
         } 
         return fetch(`${this._url}/cards/${_id}/likes`,request)
-            .then(res => {
-                if (res.ok) {
-                    return res.json()
-                }       
-                return Promise.reject(`Ошибка: ${res.status}`)
-            })
-            .catch((err) => {console.log(err)
-            })
+        .then(this._checkResponse)
     }
 
     deleteLike(_id) {
@@ -93,14 +67,7 @@ export default class Api {
             headers: this._headers,
         } 
         return fetch(`${this._url}/cards/${_id}/likes`,request)
-            .then(res => {
-                if (res.ok) {
-                    return res.json()
-                }       
-                return Promise.reject(`Ошибка: ${res.status}`)
-            })
-            .catch((err) => {console.log(err)
-            })
+        .then(this._checkResponse)
     }
 
     removeCard(_id) {
@@ -110,14 +77,7 @@ export default class Api {
                 headers: this._headers,
             } 
             return fetch(`${this._url}/cards/${_id}`,request)
-                .then(res => {
-                    if (res.ok) {
-                        return res.json()
-                    }       
-                    return Promise.reject(`Ошибка: ${res.status}`)
-                })
-                .catch((err) => {console.log(err)
-                })
+            .then(this._checkResponse)
         }
     }
 
@@ -131,14 +91,7 @@ export default class Api {
                 })
             } 
             return fetch(`${this._url}/users/me/avatar`,request)
-                .then(res => {
-                    if (res.ok) {
-                        return res.json()
-                    }       
-                    return Promise.reject(`Ошибка: ${res.status}`)
-                })
-                .catch((err) => {alert(`${err}\nОшибка обновления аватара \n  Ссылка должна содержать ссылку на изображение`)
-            })
+            .then(this._checkResponse)
             }
     }
 }

@@ -27,7 +27,6 @@ export default class Card {
 //Метод лайкнуть фото
     _likeSwitch = () => {
         this._hendlSwitchLike()
-        this._likeButton.classList.toggle("card__like_active");
         this.likeStatus = !this.likeStatus;
     }
 
@@ -47,6 +46,7 @@ export default class Card {
 
     likeRender = (count) => {
         this._likes.textContent = count.length;
+        this._likeButton.classList.toggle("card__like_active");
     }
     
 //Метод создания, заполнения и возврата карточки
