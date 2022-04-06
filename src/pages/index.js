@@ -22,7 +22,7 @@ const api = new Api ({
 //Инициализация переменных-----------------------------------------------------------------
 
 // userId
-const userId = "eed7b31a2644013072f6aaa4";
+let userId = "";
 
 //Popups
 const popupProfile = document.querySelector(".popup_type_profile");
@@ -74,9 +74,10 @@ const section = new Section ({renderer: (data)=>{
 
 Promise.all([api.getInitCards(), api.getUserInfo()])
     .then(([cards, data]) => {
-        section.renderItems(cards);
         userInfo.setUserInfo({name: data.name, about: data.about});
         userInfo.setUserAvatar(data.avatar);
+        userId = data._id;
+        section.renderItems(cards);
     })
     .catch(() => {alert(`Ошибка загрузки \n  Обновите пожалуйста страницу, для этого нажмите "F5"`)
     })
@@ -181,7 +182,7 @@ function handlAvatarSubmit(inputs) {
     .then(data => {
         userInfo.setUserAvatar(data.avatar)
     })
-    then(() => {popupWithFormAvatar.close();
+    .then(() => {popupWithFormAvatar.close();
     })
     .finally(() => {
         switchButtonState(false,popupWithFormAvatar.saveBtn)
